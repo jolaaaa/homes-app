@@ -4,11 +4,13 @@ import {ActivatedRoute} from "@angular/router";
 import {HousingService} from "../housing.service";
 import {HousingLocation} from "../housing-location";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  providers:[HousingService],
   template: `
     <article>
       <img class="listing-photo" [src]="housingLocation?.photo" alt="Foto di {{housingLocation?.name}}">
@@ -62,8 +64,9 @@ export class DetailsComponent {
     // legge id della location dai parametri della route
     const housingLocationId=Number(this.route.snapshot.params['id']);
     // recupero dati
-    this.housingService.getHousingLocationById(housingLocationId).then(housingLocation =>{
-      this.housingLocation=housingLocation;
+    this.housingService.getHousingLocationById(housingLocationId).subscribe({
+      next: (housingLocation) => (this.housingLocation = housingLocation),
+      error :(err)=> console.error('Errore nel caricamento: ', err),
     });
   }
   // metodo che invia i dati del form

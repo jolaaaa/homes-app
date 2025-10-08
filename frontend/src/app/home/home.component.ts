@@ -1,14 +1,16 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HousingLocationComponent} from "../housing-location/housing-location.component";
 import {HousingLocation} from "../housing-location";
 import {HousingService} from "../housing.service";
 import {Router} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
     selector: 'app-home', // nome tag HTML per questo componente
     standalone: true,
-    imports: [CommonModule, HousingLocationComponent,],
+    imports: [CommonModule, HousingLocationComponent, HttpClientModule],
+    providers:[HousingService],
     template: `
         <header class="header">
             <form class="search-form">
@@ -28,7 +30,7 @@ import {Router} from "@angular/router";
         <section>
             <section class="results"></section>
             <app-housing-location
-                    *ngFor="let housingLocation of filteredLocationList"
+                    *ngFor="let housingLocation of housingLocationList"
                     [housingLocation]="housingLocation">
             </app-housing-location>
         </section>
@@ -36,18 +38,28 @@ import {Router} from "@angular/router";
     `,
     styleUrls: ['./home.component.css'] //style css
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
     housingLocationList: HousingLocation[] = []; // lista completa abitazioni
-    housingService: HousingService = inject(HousingService); // ottiene servizio con inject
+    //housingService: HousingService = inject(HousingService); // ottiene servizio con inject
     filteredLocationList: HousingLocation[] = []; //lista mostrata dopo il filter
     menuOpen = false;
 
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private housingService: HousingService) {
         // recupera le abitazioni quando il componente viene creato
-        this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
+        /*this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
             this.housingLocationList = housingLocationList;
             this.filteredLocationList = housingLocationList;
+        }); */
+    }
+
+    ngOnInit() {
+        this.housingService.getAllHousingLocations().subscribe({
+            next: (data) => {
+               // console.log('Dati ricevuti', data);
+                this.housingLocationList=data;
+                },
+            error: (err) => console.error('Errore:', err)
         });
     }
 

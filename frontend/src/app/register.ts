@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {NgIf} from "@angular/common";
+import {AuthService} from "./AuthService";
 
 @Component({
     selector: 'app-registration',
@@ -28,13 +29,24 @@ export class RegistrationComponent {
     error: string | null = null;
     success: string | null = null;
 
-    constructor(private fb: FormBuilder, private router: Router) {
+    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
         this.registerForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(4)]],
             confirmPassword: ['', [Validators.required]]
         });
     }
+
+    submitRegister() {
+        const {email, password} = this.registerForm.value;
+        this.authService.register(email, password).subscribe({
+            next: res => {
+                console.log('Registrazione completata', res);
+            },
+            error: err => console.error('Errore registrazione: ', err),
+        })
+    }
+
 
     onSubmit(): void {
         if (this.registerForm.valid) {
@@ -45,25 +57,22 @@ export class RegistrationComponent {
                 return;
             }
 
-            const usersJson = localStorage.getItem('registeredUsers');
-            const users = usersJson ? JSON.parse(usersJson) : [];
+            // Chiama AuthService per salvare sia nel localStorage che nel backend
+            this.authService.register(email!, password!).subscribe({
+                next: (res) => {
+                    console.log('Risposta backend:', res);
+                    this.success = 'Registrazione completata! Puoi fare login.';
+                    this.error = null;
 
-            if (users.some((u: any) => u.email === email)) {
-                this.error = 'Utente già registrato';
-                return;
-            }
-            // aggiunge il nuovo utente al localStorage
-            users.push({email, password});
-            localStorage.setItem('registeredUsers', JSON.stringify(users));
-
-
-            this.success = 'Registrazione completata! Puoi fare login.';
-            this.error = null;
-
-            //  redirect al login
-            setTimeout(() => {
-                this.router.navigate(['/']);
-            }, 2000);
+                    setTimeout(() => {
+                        this.router.navigate(['/']);
+                    }, 2000);
+                },
+                error: (err) => {
+                    this.error = err.error?.message || 'Errore durante la registrazione.';
+                    console.error(err);
+                }
+            });
         }
     }
 }

@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HousingLocation} from "./housing-location";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -7,21 +9,16 @@ import {HousingLocation} from "./housing-location";
 })
 export class HousingService {
     //URL del backend: un JSON locale
-    url = "http://localhost:3000/locations";
+    private url = 'http://localhost:3000/locations'; // spostare al backend nestjs
 
-    constructor() {
+    constructor(private http: HttpClient) {}
+
+    getAllHousingLocations(): Observable<HousingLocation[]> {
+        return this.http.get<HousingLocation[]>(this.url);
     }
 
-    // recupera tutte le abitazioni disponibili
-    async getAllHousingLocations(): Promise<HousingLocation[]> {
-        const data = await fetch(this.url); // HTTP Request
-        return await data.json() ?? []; // return dei dati come array o null
-    }
-
-    // recupera le abitazioni specifiche in base all'id
-    async getHousingLocationById(id: Number): Promise<HousingLocation | undefined> {
-        const data = await fetch(`${this.url}/${id}`); // prende l'id delle location
-        return await data.json() ?? {}; // return l'oggetto corrispondente
+    getHousingLocationById(id: number): Observable<HousingLocation> {
+        return this.http.get<HousingLocation>(`${this.url}/${id}`);
     }
 
 // segna i dati in console del browser
@@ -29,4 +26,5 @@ export class HousingService {
         console.log(firstName, lastName, email);
     }
 }
+
 

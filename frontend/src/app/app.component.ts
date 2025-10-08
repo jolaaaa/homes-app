@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterModule} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   standalone: true, // componente standalone, non serve dichiararlo in un NgModule (può vivere da solo e importare direttamente ciò di cui ha bisogno)
@@ -14,7 +15,7 @@ import {RouterModule} from "@angular/router";
       </section>
     </main>`,
   styleUrls: ['./app.component.css'], // file css collegato per lo style
-  imports:[RouterModule] // importa il modulo per la route utilizzabile da questo standalone
+  imports:[RouterModule, HttpClientModule] // importa il modulo per la route utilizzabile da questo standalone
 })
 export class AppComponent {
   title = 'homes'; // proprietà usata come titolo dell'app

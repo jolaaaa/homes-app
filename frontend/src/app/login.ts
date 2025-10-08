@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {Router} from "@angular/router";
+import {AuthService} from "./AuthService";
 
 @Component({
     selector: 'app-login',
@@ -33,10 +34,11 @@ export class LoginComponent {
         {email: 'admin@example.com', password: 'admin123'},
         {email: 'user@example.com', password: 'user123'}
     ];
+
     private user: any;
     private isLoggedIn: boolean | undefined;
 
-    constructor(private fb: FormBuilder, private router: Router) {
+    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]]
@@ -54,21 +56,21 @@ export class LoginComponent {
         if (this.loginForm.valid) {
             const {email, password} = this.loginForm.value;
 
-            const usersJson = localStorage.getItem('registeredUsers');
-            const users = usersJson ? JSON.parse(usersJson) : [];
+            this.authService.login(email, password).subscribe({
+                next: res => {
+                    console.log('Login con successo', res)
+                    localStorage.setItem('accessToken', res.accessToken);
+                    localStorage.setItem('user', JSON.stringify(res.user));
 
-            // cerca nelle credenziali registrate o hardcoded
-            const matchedUser = users.find((u: any) => u.email === email && u.password === password)
-                || this.validCredentials.find(u => u.email === email && u.password === password);
-
-            if (matchedUser) {
-                // salva in localStorage
-                localStorage.setItem('user', JSON.stringify({email}));
-                // naviga alla home page
-                this.router.navigate(['/home']);
-            } else {
-                this.error = 'Credenziali non valide';
-            }
+                    this.error = null;
+                    this.router.navigate(['/home']);
+                },
+                error: (err) => {
+                    console.error('Errore login: ', err);
+                    this.error = err.error?.message || 'Credenziali non valide'
+                }
+            });
         }
     }
 }
+
