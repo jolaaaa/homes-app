@@ -1,17 +1,16 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HousingLocationComponent} from "../housing-location/housing-location.component";
 import {HousingLocation} from "../housing-location";
 import {HousingService} from "../housing.service";
 import {HttpClientModule} from "@angular/common/http";
-import {AuthService} from "../AuthService";
 import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-home', // nome tag HTML per questo componente
     standalone: true,
     imports: [CommonModule, HousingLocationComponent, HttpClientModule],
-    providers:[HousingService],
+    providers: [HousingService],
     template: `
         <header class="header">
             <form class="search-form">
@@ -30,7 +29,7 @@ import {Router} from "@angular/router";
         <section>
             <section class="results"></section>
             <app-housing-location
-                    *ngFor="let housingLocation of housingLocationList"
+                    *ngFor="let housingLocation of filteredLocationList"
                     [housingLocation]="housingLocation">
             </app-housing-location>
         </section>
@@ -38,28 +37,22 @@ import {Router} from "@angular/router";
     `,
     styleUrls: ['./home.component.css'] //style css
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
     housingLocationList: HousingLocation[] = []; // lista completa abitazioni
-    //housingService: HousingService = inject(HousingService); // ottiene servizio con inject
     filteredLocationList: HousingLocation[] = []; //lista mostrata dopo il filter
     menuOpen = false;
 
 
-
     constructor(private router: Router, private housingService: HousingService) {
-        // recupera le abitazioni quando il componente viene creato
-        /*this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
-            this.housingLocationList = housingLocationList;
-            this.filteredLocationList = housingLocationList;
-        }); */
     }
 
     ngOnInit() {
         this.housingService.getAllHousingLocations().subscribe({
             next: (data) => {
-               // console.log('Dati ricevuti', data);
-                this.housingLocationList=data;
-                },
+                // console.log('Dati ricevuti', data);
+                this.housingLocationList = data;
+                this.filteredLocationList = data;
+            },
             error: (err) => console.error('Errore:', err)
         });
     }
@@ -68,7 +61,7 @@ export class HomeComponent implements OnInit{
         if (!text) this.filteredLocationList = this.housingLocationList;
         // se filtro vuoto mostra tutto
         this.filteredLocationList = this.housingLocationList.filter(
-            housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+            location => location?.city.toLowerCase().includes(text.toLowerCase())
             // filtro case-insensitive sul campo "city", trova tutte le stringe della città dal testo scritto dall'utente
         );
     }

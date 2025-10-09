@@ -44,7 +44,7 @@ export class AuthController {
 
     @Post('login')
     login(@Body() credentials: { email: string; password: string }) {
-        console.log('login preso dal backend: ',credentials.email);
+        console.log('login preso dal backend: ', credentials.email);
 
         const users = this.readUsers();
         const user = users.find(
