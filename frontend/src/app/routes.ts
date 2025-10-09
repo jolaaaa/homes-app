@@ -4,6 +4,7 @@ import {DetailsComponent} from "./details/details.component";
 import {LoginComponent} from "./login";
 import {RegistrationComponent} from "./register";
 import {ProfileComponent} from "./profile";
+import {AuthGuard} from "./auth.guard";
 
 // configurazione delle rotte dell'applicazione
 const routeConfig: Routes = [
@@ -29,7 +30,7 @@ const routeConfig: Routes = [
     },
     {
         path: 'profile',
-        component: ProfileComponent,
+        component: ProfileComponent, canActivate:[AuthGuard],
         title: 'Profile Page'
     }
 ];

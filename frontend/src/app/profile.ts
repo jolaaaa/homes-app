@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router} from "@angular/router";
+import {AuthService} from "./AuthService";
 
 @Component({
     selector: 'app-profile',
@@ -20,14 +21,14 @@ import {Router} from "@angular/router";
 export class ProfileComponent {
     email: string | null = null;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
     }
 
     ngOnInit(): void {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             const userObj = JSON.parse(storedUser);
-            this.email = userObj.email;  // prendi solo la mail
+            this.email = userObj.email;  // prendi solo la mail*/
         }
     }
 

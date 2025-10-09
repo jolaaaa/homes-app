@@ -3,8 +3,8 @@ import {CommonModule} from '@angular/common';
 import {HousingLocationComponent} from "../housing-location/housing-location.component";
 import {HousingLocation} from "../housing-location";
 import {HousingService} from "../housing.service";
-import {Router} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
+import {AuthService} from "../AuthService";
 
 @Component({
     selector: 'app-home', // nome tag HTML per questo componente
@@ -22,7 +22,6 @@ import {HttpClientModule} from "@angular/common/http";
                 <span class="user-icon">👤</span>
                 <div *ngIf="menuOpen" class="menu-dropdown">
                     <button (click)="goToProfile()">Profile</button>
-                    <button (click)="logout()">Logout</button>
                 </div>
             </div>
         </header>
@@ -43,6 +42,7 @@ export class HomeComponent implements OnInit{
     //housingService: HousingService = inject(HousingService); // ottiene servizio con inject
     filteredLocationList: HousingLocation[] = []; //lista mostrata dopo il filter
     menuOpen = false;
+
 
 
     constructor(private router: Router, private housingService: HousingService) {
@@ -78,11 +78,5 @@ export class HomeComponent implements OnInit{
 
     goToProfile() {
         this.router.navigate(['/profile']);
-    }
-
-    logout() {
-        localStorage.removeItem('user');   // esempio: rimuove l'utente
-        localStorage.removeItem('token');
-        this.router.navigate(['/']);
     }
 }
