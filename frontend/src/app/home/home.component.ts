@@ -5,6 +5,7 @@ import {HousingLocation} from "../housing-location";
 import {HousingService} from "../housing.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthService} from "../AuthService";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-home', // nome tag HTML per questo componente

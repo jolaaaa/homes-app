@@ -6,5 +6,9 @@
   {
     "email": "backend2@gmail.com",
     "password": "backend"
+  },
+  {
+    "email": "provaback@gmail.com",
+    "password": "back"
   }
 ]

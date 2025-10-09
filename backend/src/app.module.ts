@@ -6,9 +6,10 @@ import {LocationsController} from "./locations/locations.controller";
 import {LocationsService} from "./locations/locations.service";
 import {AuthModule} from "./auth/auth.module";
 import {AuthController} from "./auth/auth.controller";
+import {ApplicationsModule} from "./apply/applications.module";
 
 @Module({
-    imports: [LocationsModule, AuthModule],
+    imports: [LocationsModule, AuthModule, ApplicationsModule],
     controllers: [AppController, AuthController],
     providers: [AppService],
 })

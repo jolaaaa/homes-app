@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 export class HousingService {
     //URL del backend: un JSON locale
     private url = 'http://localhost:3000/locations'; // spostare al backend nestjs
+    private applicationsUrl = 'http://localhost:3000/applications';
 
     constructor(private http: HttpClient) {}
 
@@ -22,8 +23,9 @@ export class HousingService {
     }
 
 // segna i dati in console del browser
-    submitApplication(firstName: string, lastName: string, email: string) {
-        console.log(firstName, lastName, email);
+    submitApplication(firstName: string, lastName: string, email: string, houseName: string) {
+        const body = { firstName, lastName, email, houseName};
+        return this.http.post('http://localhost:3000/applications', body);
     }
 }
 
