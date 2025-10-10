@@ -1,4 +1,4 @@
-import {Module, UnprocessableEntityException} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {LocationsModule} from "./locations/locations.module";
@@ -7,7 +7,7 @@ import {AuthController} from "./auth/auth.controller";
 import {ApplicationsModule} from "./apply/applications.module";
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {UserSeederModule} from "./auth/user-seeder.module";
 
 @Module({
     imports: [LocationsModule, AuthModule, ApplicationsModule, ConfigModule.forRoot({isGlobal:true}),
@@ -20,7 +20,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
         database: process.env.DB_NAME || 'mydb',
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true, // solo per sviluppo!
-    })
+    }), UserSeederModule
     ],
     controllers: [AppController, AuthController],
     providers: [AppService],

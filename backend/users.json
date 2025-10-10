@@ -10,5 +10,21 @@
   {
     "email": "provaback@gmail.com",
     "password": "back"
+  },
+  {
+    "email": "db@gmail.com",
+    "password": "data"
+  },
+  {
+    "email": "db2@gmail.com",
+    "password": "data"
+  },
+  {
+    "email": "db3@gmail.com",
+    "password": "data"
+  },
+  {
+    "email": "database@gmail.com",
+    "password": "data"
   }
 ]
