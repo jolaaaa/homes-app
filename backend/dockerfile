@@ -1,0 +1,27 @@
+# Stage di build
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copio package.json e package-lock.json
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Stage di produzione
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+# Copio i moduli di produzione + dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+
+# Imposta variabile d’ambiente (facoltativa)
+ENV NODE_ENV production
+
+CMD ["node", "dist/main.js"]
