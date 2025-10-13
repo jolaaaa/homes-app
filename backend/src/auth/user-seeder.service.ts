@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Injectable} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
 import * as fs from 'fs';
 import * as bcrypt from 'bcrypt';
-import { User } from './user.entity';
+import {User} from './user.entity';
 import * as path from 'path';
 
 @Injectable()
 export class UserSeederService {
-    constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+    constructor(@InjectRepository(User) private userRepo: Repository<User>,
+    ) {
+    }
 
     async seed() {
         try {
@@ -25,7 +27,7 @@ export class UserSeederService {
             for (const u of users) {
                 const normalizedEmail = u.email.trim().toLowerCase();
 
-                const existing = await this.userRepo.findOne({ where: { email: normalizedEmail } });
+                const existing = await this.userRepo.findOne({where: {email: normalizedEmail}});
                 if (existing) {
                     console.log(`⏭️ Utente ${normalizedEmail} già presente, salto.`);
                     continue;
