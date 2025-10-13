@@ -26,5 +26,21 @@
   {
     "email": "database@gmail.com",
     "password": "data"
+  },
+  {
+    "email": "dbb@gmail.com",
+    "password": "data"
+  },
+  {
+    "email": "monday@gmail.com",
+    "password": "monday"
+  },
+  {
+    "email": "monday2@gmail.com",
+    "password": "monday"
+  },
+  {
+    "email": "prova@gmail.com",
+    "password": "abcd"
   }
 ]

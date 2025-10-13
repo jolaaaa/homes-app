@@ -1,7 +1,7 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import {Injectable, HttpException, HttpStatus} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
+import {User} from './user.entity';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -32,6 +32,7 @@ export class AuthService {
     }
 
     async register(dto: { email: string; password: string }) {
+        const {email, password} = dto;
         const existing = await this.userRepo.findOne({where: {email: dto.email}});
         if (existing) {
             throw new HttpException('Utente già registrato', HttpStatus.CONFLICT);

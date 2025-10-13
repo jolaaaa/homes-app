@@ -22,7 +22,7 @@ import {UserSeederModule} from "./auth/user-seeder.module";
         synchronize: true, // solo per sviluppo!
     }), UserSeederModule
     ],
-    controllers: [AppController, AuthController],
+    controllers: [AppController],
     providers: [AppService],
 })
 
