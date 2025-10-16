@@ -42,5 +42,9 @@
   {
     "email": "prova@gmail.com",
     "password": "abcd"
+  },
+  {
+    "email": "provanuova@gmail.com",
+    "password": "$2b$10$vKYMeBNQBO7p.1qTbwcV9uw7Xhm6NwmpjNkv6j8dmKCBeyWLWcVTe"
   }
 ]
