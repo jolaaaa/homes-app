@@ -1,26 +1,30 @@
 import {Controller, Post, Body} from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import {InjectRepository} from "@nestjs/typeorm";
+import { Repository } from 'typeorm';
+import {Application} from "./applications.entity";
 
-interface Application {
+/*interface Application {
     firstName: string;
     lastName: string;
     email: string;
-}
+}*/
 
 @Controller('applications')
 export class ApplicationsController {
-    private filePath = path.join(process.cwd(), 'src', 'apply', 'applications.json');
+    constructor(
+        @InjectRepository(Application)
+        private readonly repo: Repository<Application>,
+    ) {}
 
     @Post()
-    submitApplication(@Body() body: Application) {
-        const applications: Application[] = fs.existsSync(this.filePath)
-            ? JSON.parse(fs.readFileSync(this.filePath, 'utf8'))
-            : [];
+    async submitApplication(@Body() body: Partial<Application>) {
+        // Crea una nuova entity dal body
+        const application = this.repo.create(body);
+        // Salva nel database
+        await this.repo.save(application);
 
-        applications.push(body);
-
-        fs.writeFileSync(this.filePath, JSON.stringify(applications, null, 2));
-        return {message: 'Application saved successfully'};
+        return { message: 'Application saved successfully' };
     }
 }
