@@ -8,6 +8,8 @@ import {ApplicationsModule} from "./apply/applications.module";
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule} from '@nestjs/config';
 import {UserSeederModule} from "./auth/user-seeder.module";
+import {HousesModule} from "./houses/houses.module";
+import {LocationsController} from "./locations/locations.controller";
 
 @Module({
     imports: [LocationsModule, AuthModule, ApplicationsModule, ConfigModule.forRoot({isGlobal: true}),
@@ -22,9 +24,9 @@ import {UserSeederModule} from "./auth/user-seeder.module";
             synchronize: false,
             migrations: [__dirname + '/migrations/*.ts'],
             migrationsRun: false,
-        }), UserSeederModule
+        }), UserSeederModule, HousesModule
     ],
-    controllers: [AppController],
+    controllers: [AppController, LocationsController],
     providers: [AppService],
 })
 

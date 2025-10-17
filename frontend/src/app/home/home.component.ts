@@ -33,7 +33,10 @@ import {Router} from "@angular/router";
                     [housingLocation]="housingLocation">
             </app-housing-location>
         </section>
-
+        
+        <footer class="add-house-footer">
+            <button class="primary add-house-btn" (click)="goToAddHouse()">Nuova Casa</button>
+        </footer>
     `,
     styleUrls: ['./home.component.css'] //style css
 })
@@ -72,5 +75,10 @@ export class HomeComponent implements OnInit {
 
     goToProfile() {
         this.router.navigate(['/profile']);
+    }
+
+    goToAddHouse() {
+        this.router.navigate(['/add-house']);
+
     }
 }

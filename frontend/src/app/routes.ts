@@ -5,6 +5,7 @@ import {LoginComponent} from "./login";
 import {RegistrationComponent} from "./register";
 import {ProfileComponent} from "./profile";
 import {AuthGuard} from "./auth.guard";
+import {AddHouseComponent} from "./AddHouseComponent";
 
 // configurazione delle rotte dell'applicazione
 const routeConfig: Routes = [
@@ -32,6 +33,11 @@ const routeConfig: Routes = [
         path: 'profile',
         component: ProfileComponent, canActivate:[AuthGuard],
         title: 'Profile Page'
+    },
+    {
+      path: 'add-house',
+      component: AddHouseComponent,
+      title: 'New House'
     }
 ];
 // esporta la configurazione come default per importarla altrove

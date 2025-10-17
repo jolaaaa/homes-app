@@ -80,3 +80,15 @@
 .menu-dropdown button:hover {
     background: #f0f0f0;
 }
+
+.add-house-footer {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.add-house-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+}
