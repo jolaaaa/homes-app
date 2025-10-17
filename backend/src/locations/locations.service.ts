@@ -1,56 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
-
-export interface Location {
-    id: number;
-    name: string;
-    city: string;
-    state: string;
-    availableUnits: number;
-    wifi: boolean;
-    laundry: boolean;
-    photo: string;
-}
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Location } from './locations.entity';
 
 @Injectable()
 export class LocationsService {
-    private locations: Location[] = [];
-    private dataPath: string;
+    constructor(
+        @InjectRepository(Location)
+        private readonly locationRepository: Repository<Location>,
+    ) {}
 
-    constructor() {
-        // path assoluto corretto al file JSON nella cartella src
-        this.dataPath = join(__dirname, 'data', 'locations.json');
-        try {
-            this.locations = JSON.parse(readFileSync(this.dataPath, 'utf8'));
-        } catch (err) {
-            console.error('Errore caricando locations.json:', err);
-            this.locations = [];
-        }
+    // 🔹 Ottieni tutte le location
+    async getAll(): Promise<Location[]> {
+        return await this.locationRepository.find();
     }
 
-    getAll(): Location[] {
-        return this.locations;
+    // 🔹 Ottieni una location per ID
+    async getById(id: number): Promise<Location> {
+        const location = await this.locationRepository.findOne({ where: { id } });
+        if (!location) throw new NotFoundException(`Location ${id} not found`);
+        return location;
     }
 
-    getById(id: number): Location | null {
-        return this.locations.find(loc => loc.id === id) || null;
-    }
-
-    addLocation(newLocation: Location): Location {
-        newLocation.id = this.locations.length
-            ? Math.max(...this.locations.map(loc => loc.id)) + 1
-            : 1;
-
-        this.locations.push(newLocation);
-
-        // scrive sul file JSON con path assoluto coerente
-        try {
-            writeFileSync(this.dataPath, JSON.stringify(this.locations, null, 2));
-        } catch (err) {
-            console.error('Errore scrivendo locations.json:', err);
-        }
-
-        return newLocation;
+    // 🔹 Aggiungi una nuova location
+    async addLocation(data: Omit<Location, 'id'>): Promise<Location> {
+        const newLocation = this.locationRepository.create(data);
+        return await this.locationRepository.save(newLocation);
     }
 }

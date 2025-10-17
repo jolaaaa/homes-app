@@ -9,7 +9,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
     imports: [TypeOrmModule.forFeature([Location])],
     controllers: [LocationsController],
     providers: [LocationsService],
-    exports: [TypeOrmModule],
+    exports: [TypeOrmModule, LocationsService],
 })
 export class LocationsModule {
 }

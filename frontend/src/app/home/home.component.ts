@@ -40,6 +40,7 @@ import {Router} from "@angular/router";
     `,
     styleUrls: ['./home.component.css'] //style css
 })
+
 export class HomeComponent implements OnInit {
     housingLocationList: HousingLocation[] = []; // lista completa abitazioni
     filteredLocationList: HousingLocation[] = []; //lista mostrata dopo il filter
@@ -52,11 +53,10 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.housingService.getAllHousingLocations().subscribe({
             next: (data) => {
-                // console.log('Dati ricevuti', data);
                 this.housingLocationList = data;
                 this.filteredLocationList = data;
             },
-            error: (err) => console.error('Errore:', err)
+            error: (err) => console.error('errore:', err)
         });
     }
 
