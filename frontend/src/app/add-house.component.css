@@ -1,0 +1,125 @@
+/* Struttura generale simile alla pagina dei dettagli */
+.add-house {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Titolo coerente con listing-heading */
+.add-house h2 {
+    font-size: 42pt;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+/* Stile coerente con listing-apply form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 20px;
+}
+
+/* Etichette come nella pagina dei dettagli */
+label {
+    color: var(--secondary-color);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12pt;
+}
+
+/* Input coerenti con quelli del details.component.css */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    font-size: 16pt;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 500px;
+    border: none;
+    border-bottom: solid 0.3px;
+    background: transparent;
+}
+
+/* Pulsante principale coerente */
+button.primary {
+    background-color: var(--primary-color, #007bff);
+    color: white;
+    padding: 12px 24px;
+    font-size: 16pt;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.primary:hover {
+    background-color: var(--secondary-color, #0056b3);
+}
+
+/* Campo file input */
+input[type="file"] {
+    font-size: 14pt;
+    margin-top: 10px;
+}
+
+/* Anteprima immagine in stile simile alla listing-photo */
+.preview {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.preview-img {
+    width: 60%;
+    max-width: 500px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Messaggi di stato */
+.success {
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Responsive come nel details.component.css */
+@media (max-width: 1024px) {
+    .add-house {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .add-house h2 {
+        font-size: 28pt;
+    }
+
+    .preview-img {
+        width: 100%;
+        height: 250px;
+    }
+
+    input,
+    select {
+        width: 100%;
+    }
+}

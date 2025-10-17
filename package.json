@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "reflect-metadata": "^0.2.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.27"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
