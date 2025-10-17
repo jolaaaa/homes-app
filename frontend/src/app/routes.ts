@@ -25,19 +25,19 @@ const routeConfig: Routes = [
         title: 'Home Page'
     },
     {
-        path:'register',
+        path: 'register',
         component: RegistrationComponent,
         title: 'Registration Page'
     },
     {
         path: 'profile',
-        component: ProfileComponent, canActivate:[AuthGuard],
+        component: ProfileComponent, canActivate: [AuthGuard],
         title: 'Profile Page'
     },
     {
-      path: 'add-house',
-      component: AddHouseComponent,
-      title: 'New House'
+        path: 'add-house',
+        component: AddHouseComponent,
+        title: 'New House'
     }
 ];
 // esporta la configurazione come default per importarla altrove

@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {LocationsController} from './locations.controller';
 import {LocationsService} from './locations.service';
-import { Location } from './locations.entity';
+import {Location} from './locations.entity';
 import {TypeOrmModule} from "@nestjs/typeorm";
 
 

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HousingService } from './housing.service';
-import { HttpClientModule } from '@angular/common/http';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {HousingService} from './housing.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @Component({
     selector: 'app-add-house',
@@ -11,50 +11,50 @@ import { HttpClientModule } from '@angular/common/http';
     imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
     providers: [HousingService],
     template: `
-    <section class="add-house">
-      <h2>Aggiungi una nuova casa</h2>
+        <section class="add-house">
+            <h2>Aggiungi una nuova casa</h2>
 
-      <form [formGroup]="houseForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-        <label for="name">Nome</label>
-        <input id="name" type="text" formControlName="name" placeholder="Nome della casa" required>
+            <form [formGroup]="houseForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                <label for="name">Nome</label>
+                <input id="name" type="text" formControlName="name" placeholder="Nome della casa" required>
 
-        <label for="city">Città</label>
-        <input id="city" type="text" formControlName="city" placeholder="Città" required>
+                <label for="city">Città</label>
+                <input id="city" type="text" formControlName="city" placeholder="Città" required>
 
-        <label for="state">Stato</label>
-        <input id="state" type="text" formControlName="state" placeholder="Stato" required>
+                <label for="state">Provincia</label>
+                <input id="state" type="text" formControlName="state" placeholder="Provincia" required>
 
-        <label for="availableUnits">Unità disponibili</label>
-        <input id="availableUnits" type="number" formControlName="availableUnits" required>
+                <label for="availableUnits">Unità disponibili</label>
+                <input id="availableUnits" type="number" formControlName="availableUnits" required>
 
-        <label for="wifi">Wi-Fi</label>
-        <select id="wifi" formControlName="wifi">
-          <option value="true">Disponibile</option>
-          <option value="false">Non disponibile</option>
-        </select>
+                <label for="wifi">Wi-Fi</label>
+                <select id="wifi" formControlName="wifi">
+                    <option value="true">Disponibile</option>
+                    <option value="false">Non disponibile</option>
+                </select>
 
-        <label for="laundry">Lavanderia</label>
-        <select id="laundry" formControlName="laundry">
-          <option value="true">Disponibile</option>
-          <option value="false">Non disponibile</option>
-        </select>
-          
-        <label for="photo">Immagine</label>
-        <input id="photo" type="file" (change)="onFileSelected($event)" accept="image/*">
+                <label for="laundry">Lavanderia</label>
+                <select id="laundry" formControlName="laundry">
+                    <option value="true">Disponibile</option>
+                    <option value="false">Non disponibile</option>
+                </select>
 
-        
-        <div *ngIf="previewUrl" class="preview">
-          <p>Anteprima:</p>
-          <img [src]="previewUrl" alt="Anteprima immagine" class="preview-img">
-        </div>
+                <label for="photo">Immagine</label>
+                <input id="photo" type="file" (change)="onFileSelected($event)" accept="image/*">
 
-        <button class="primary" type="submit" [disabled]="houseForm.invalid">Salva casa</button>
-      </form>
 
-      <p *ngIf="message" class="success">{{ message }}</p>
-      <p *ngIf="error" class="error">{{ error }}</p>
-    </section>
-  `,
+                <div *ngIf="previewUrl" class="preview">
+                    <p>Anteprima:</p>
+                    <img [src]="previewUrl" alt="Anteprima immagine" class="preview-img">
+                </div>
+
+                <button class="primary" type="submit" [disabled]="houseForm.invalid">Salva casa</button>
+            </form>
+
+            <p *ngIf="message" class="success">{{ message }}</p>
+            <p *ngIf="error" class="error">{{ error }}</p>
+        </section>
+    `,
     styleUrls: ['./add-house.component.css']
 })
 export class AddHouseComponent {
@@ -72,7 +72,8 @@ export class AddHouseComponent {
     message = '';
     error = '';
 
-    constructor(private housingService: HousingService, private router: Router) {}
+    constructor(private housingService: HousingService, private router: Router) {
+    }
 
     onFileSelected(event: Event) {
         const input = event.target as HTMLInputElement;

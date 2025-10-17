@@ -3,12 +3,10 @@ import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {LocationsModule} from "./locations/locations.module";
 import {AuthModule} from "./auth/auth.module";
-import {AuthController} from "./auth/auth.controller";
 import {ApplicationsModule} from "./apply/applications.module";
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule} from '@nestjs/config';
 import {UserSeederModule} from "./auth/user-seeder.module";
-//import {HousesModule} from "./houses/houses.module";
 import {LocationsController} from "./locations/locations.controller";
 
 @Module({
@@ -24,7 +22,7 @@ import {LocationsController} from "./locations/locations.controller";
             synchronize: false,
             migrations: [__dirname + '/migrations/*.ts'],
             migrationsRun: false,
-        }), UserSeederModule, /*HousesModule*/LocationsModule
+        }), UserSeederModule, LocationsModule
     ],
     controllers: [AppController, LocationsController],
     providers: [AppService],

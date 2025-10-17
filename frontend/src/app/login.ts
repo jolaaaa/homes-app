@@ -58,19 +58,23 @@ export class LoginComponent {
 
             this.authService.login(email, password).subscribe({
                 next: res => {
-                    console.log('Login con successo', res)
+                    console.log('Login con successo', res);
+
                     localStorage.setItem('accessToken', res.accessToken);
                     localStorage.setItem('user', JSON.stringify(res.user));
 
                     this.error = null;
-                    this.router.navigate(['/home']);
+
+                    this.router.navigate(['/home'], {replaceUrl: true});
                 },
-                error: (err) => {
+                error: err => {
                     console.error('Errore login: ', err);
-                    this.error = err.error?.message || 'Credenziali non valide'
+                    this.error = err.error?.message || 'Credenziali non valide';
                 }
             });
         }
     }
+
 }
+
 

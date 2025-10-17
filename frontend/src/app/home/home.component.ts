@@ -5,17 +5,18 @@ import {HousingLocation} from "../housing-location";
 import {HousingService} from "../housing.service";
 import {HttpClientModule} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-home', // nome tag HTML per questo componente
     standalone: true,
-    imports: [CommonModule, HousingLocationComponent, HttpClientModule],
+    imports: [CommonModule, HousingLocationComponent, HttpClientModule, FormsModule],
     providers: [HousingService],
     template: `
         <header class="header">
-            <form class="search-form">
+            <form class="search-form" (ngSubmit)="filterResults(filter.value)">
                 <input type="text" placeholder="Filter by city" #filter>
-                <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+                <button class="primary" type="submit">Search</button>
             </form>
 
             <div class="user-menu" (click)="toggleMenu()">
@@ -33,7 +34,7 @@ import {Router} from "@angular/router";
                     [housingLocation]="housingLocation">
             </app-housing-location>
         </section>
-        
+
         <footer class="add-house-footer">
             <button class="primary add-house-btn" (click)="goToAddHouse()">Nuova Casa</button>
         </footer>
