@@ -11,19 +11,33 @@ import {AuthService} from "./AuthService";
     styleUrls: ['./login.component.css'],
     imports: [ReactiveFormsModule, NgIf, RouterLink],
     template: `
-        <div class="container">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-                <h2>Login</h2>
-                <div *ngIf="error" class="error">{{ error }}</div>
-                <input type="email" formControlName="email" placeholder="Email"/>
-                <input type="password" formControlName="password" placeholder="Password"/>
-                <button type="submit">Accedi</button>
-                <p class="register-link">
-                    Non hai un account?
-                    <a [routerLink]="['/register']">Registrati</a>
-                </p>
-            </form>
+        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+            <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <h2 class="text-center mb-4">Login</h2>
+
+                    <div *ngIf="error" class="alert alert-danger p-2 text-center">{{ error }}</div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" formControlName="email" placeholder="Inserisci la tua email"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" formControlName="password" placeholder="Inserisci la password"/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Accedi</button>
+
+                    <p class="text-center mt-3">
+                        Non hai un account?
+                        <a [routerLink]="['/register']">Registrati</a>
+                    </p>
+                </form>
+            </div>
         </div>
+
     `
 })
 

@@ -10,17 +10,35 @@ import {AuthService} from "./AuthService";
     styleUrls: ['./register.component.css'],
     imports: [ReactiveFormsModule, NgIf],
     template: `
-        <div class="container">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-                <h2>Registrazione</h2>
-                <div *ngIf="error" class="error">{{ error }}</div>
-                <div *ngIf="success" class="success">{{ success }}</div>
-                <input type="email" formControlName="email" placeholder="Email"/>
-                <input type="password" formControlName="password" placeholder="Password"/>
-                <input type="password" formControlName="confirmPassword" placeholder="Conferma Password"/>
-                <button type="submit">Registrati</button>
-            </form>
+        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+            <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <h2 class="text-center mb-4">Registrazione</h2>
+
+                    <!-- Messaggi di errore -->
+                    <div *ngIf="error" class="alert alert-danger p-2 text-center">{{ error }}</div>
+                    <div *ngIf="success" class="alert alert-success p-2 text-center">{{ success }}</div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" formControlName="email" placeholder="Inserisci la tua email" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" formControlName="password" placeholder="Inserisci la password" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Conferma Password</label>
+                        <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Conferma la password" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Registrati</button>
+                </form>
+            </div>
         </div>
+
     `
 })
 
