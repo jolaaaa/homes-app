@@ -12,15 +12,16 @@ import { HttpClientModule } from "@angular/common/http";
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   providers: [HousingService],
   template: `
+    <div class="container-fluid">
     <article *ngIf="housingLocation">
-      <img class="listing-photo" [src]="housingLocation.photo" alt="Foto di {{housingLocation.name}}">
+      <img class="img-fluid" [src]="housingLocation.photo" alt="Foto di {{housingLocation.name}}">
 
-      <section class="listing-description">
+      <section class="container-fluid">
         <h2 class="listing-heading">{{housingLocation.name}}</h2>
         <p class="listing-location">{{housingLocation.city}}, {{housingLocation.state}}</p>
       </section>
 
-      <section class="listing-features">
+      <section class="container-fluid">
         <h2 class="section-heading">About this location</h2>
         <ul>
           <li>Units available: {{housingLocation.availableUnits}}</li>
@@ -29,7 +30,7 @@ import { HttpClientModule } from "@angular/common/http";
         </ul>
       </section>
 
-      <section class="listing-apply">
+      <section class="container-fluid">
         <h2 class="section-heading">Apply now to live here</h2>
         <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
           <label for="first-name">First Name</label>
@@ -48,6 +49,7 @@ import { HttpClientModule } from "@angular/common/http";
         <p *ngIf="error" class="error">{{ error }}</p>
       </section>
     </article>
+    </div>
   `,
   styleUrls: ['./details.component.css']
 })
