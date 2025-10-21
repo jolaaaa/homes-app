@@ -13,41 +13,78 @@ import {FormsModule} from "@angular/forms";
     imports: [CommonModule, HousingLocationComponent, HttpClientModule, FormsModule],
     providers: [HousingService],
     template: `
-        <div class='container-fluid'>
+        <div class="container-fluid">
             <header class="header">
-                <form class="search-form" (ngSubmit)="filterResults(filter.value)">
-                    <input type="text" placeholder="Filter by city" #filter>
-                    <button class="primary" type="submit">Search</button>
-                </form>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <button
+                                class="navbar-toggler ms-auto"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarContent"
+                                aria-controls="navbarContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-                <div class="user-menu" (click)="toggleMenu()">
-    <span class="user-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle"
-             viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-        </svg>
-    </span>
-                    <div *ngIf="menuOpen" class="menu-dropdown">
-                        <button (click)="goToProfile()">Profile</button>
+
+                        <div class="collapse navbar-collapse" id="navbarContent">
+                            <form
+                                    class="d-flex mb-2 mb-lg-0 ms-auto me-3"
+                                    (ngSubmit)="filterResults(filter.value)"
+                            >
+                                <input
+                                        type="text"
+                                        class="form-control me-2"
+                                        placeholder="Filter by city"
+                                        #filter
+                                />
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-
+                </nav>
             </header>
+
+            <span class="user-icon" (click)="toggleMenu()">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+    >
+      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+      <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+      />
+    </svg>
+  </span>
+
+            <div *ngIf="menuOpen" class="menu-dropdown">
+                <button (click)="goToProfile()">Profile</button>
+            </div>
 
             <section>
                 <section class="results"></section>
                 <app-housing-location
                         *ngFor="let housingLocation of filteredLocationList"
-                        [housingLocation]="housingLocation">
+                        [housingLocation]="housingLocation"
+                >
                 </app-housing-location>
             </section>
 
             <footer class="add-house-footer">
-                <button class="primary add-house-btn" (click)="goToAddHouse()">Nuova Casa</button>
+                <button class="primary add-house-btn" (click)="goToAddHouse()">
+                    Nuova Casa
+                </button>
             </footer>
         </div>
+
     `,
     styleUrls: ['./home.component.css'] //style css
 })

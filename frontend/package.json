@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "../node_modules/.bin/ng",
-    "start": "../node_modules/.bin/ng serve",
+    "start": "ng serve",
     "build": "../node_modules/.bin/ng build",
     "watch": "../node_modules/.bin/ng build --watch --configuration development",
     "test": "../node_modules/.bin/ng test",
