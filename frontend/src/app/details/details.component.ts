@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ActivatedRoute, RouterLink, RouterModule} from "@angular/router";
+import {ActivatedRoute, RouterModule} from "@angular/router";
 import {HousingService} from "../housing.service";
 import {HousingLocation} from "../housing-location";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -9,7 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 @Component({
     selector: 'app-details',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterLink, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
     providers: [HousingService],
     template: `
         <div class="container-fluid">
@@ -42,21 +42,16 @@ import {HttpClientModule} from "@angular/common/http";
                         <label for="email">Email</label>
                         <input id="email" type="email" formControlName="email" required>
 
-                        <div class="button-row" style="display:flex; align-items:center; gap:1rem;">
-                            <button type="submit" class="primary" [disabled]="applyForm.invalid">
-                                Apply Now
-                            </button>
-
-                            <button type="submit" class="primary"
-                                    [routerLink]="['/submissions, housingLocation?.name']">
-                                View Submissions
-                            </button>
-                        </div>
+                        <button type="submit" class="primary" [disabled]="applyForm.invalid">Apply Now</button>
+                        <button type="submit" class="primary" [routerLink]="['/submissions', housingLocation.name]">
+                            View Submissions
+                        </button>
                     </form>
-
 
                     <p *ngIf="message" class="success">{{ message }}</p>
                     <p *ngIf="error" class="error">{{ error }}</p>
+
+
                 </section>
             </article>
         </div>
@@ -91,12 +86,11 @@ export class DetailsComponent {
 
         const {firstName, lastName, email} = this.applyForm.value;
 
-        // invia i dati con il nome della casa
         this.housingService.submitApplication(firstName ?? '', lastName ?? '', email ?? '', this.housingLocation.name)
             .subscribe({
-                next: (res) => {
-                    //this.message = res.message;
+                next: () => {
                     this.error = '';
+                    this.message = '✅ Application submitted successfully!';
                     this.applyForm.reset();
                 },
                 error: (err) => {

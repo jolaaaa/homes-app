@@ -117,11 +117,12 @@ export class SubmissionsComponent implements OnInit {
     ngOnInit(): void {
         this.houseName = this.route.snapshot.params['houseName'];
         this.fetchData();
+        console.log(this.houseName)
     }
 
     fetchData() {
         this.loading = true;
-        this.http.get<Application[]>(`/api/applications/house/${encodeURIComponent(this.houseName)}`)
+        this.http.get<Application[]>(`http://localhost:3000/applications/house/${encodeURIComponent(this.houseName)}`)
             .subscribe({
                 next: rows => {
                     this.allApplications = rows;
