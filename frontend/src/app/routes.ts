@@ -38,6 +38,13 @@ const routeConfig: Routes = [
         path: 'add-house',
         component: AddHouseComponent,
         title: 'New House'
+    },
+    {
+        path: 'submissions/:houseName',
+        loadComponent: () =>
+            import('./submissions/submissions.component')
+                .then(c => c.SubmissionsComponent),
+        title: 'Submissions'
     }
 ];
 // esporta la configurazione come default per importarla altrove

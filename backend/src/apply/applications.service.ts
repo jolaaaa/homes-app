@@ -6,10 +6,12 @@ import {InjectRepository} from "@nestjs/typeorm";
 @Injectable()
 export class ApplicationsService {
     private readonly applicationsService = ApplicationsService;
+
     constructor(
         @InjectRepository(Application)
         private repo: Repository<Application>,
-    ) {}
+    ) {
+    }
 
     createApplication(data: Partial<Application>) {
         const app = this.repo.create(data);
@@ -18,6 +20,13 @@ export class ApplicationsService {
 
     findAll() {
         return this.repo.find();
+    }
+
+    async findByHouseName(houseName: string): Promise<Application[]> {
+        return this.repo.createQueryBuilder('a')
+            .where('LOWER(a.houseName) = LOWER(:houseName)', {houseName})
+            .orderBy('a.createdAt', 'DESC')
+            .getMany();
     }
 
 }

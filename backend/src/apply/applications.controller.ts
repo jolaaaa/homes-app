@@ -1,15 +1,7 @@
-import {Controller, Post, Body} from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
-import {InjectRepository} from "@nestjs/typeorm";
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from 'typeorm';
-import {Application} from "./applications.entity";
-
-/*interface Application {
-    firstName: string;
-    lastName: string;
-    email: string;
-}*/
+import { Application } from "./applications.entity";
 
 @Controller('applications')
 export class ApplicationsController {
@@ -20,11 +12,17 @@ export class ApplicationsController {
 
     @Post()
     async submitApplication(@Body() body: Partial<Application>) {
-        // Crea una nuova entity dal body
         const application = this.repo.create(body);
-        // Salva nel database
         await this.repo.save(application);
-
         return { message: 'Application saved successfully' };
+    }
+
+    @Get('house/:houseName')
+    async getByHouse(@Param('houseName') houseName: string) {
+        const decoded = decodeURIComponent(houseName);
+        return this.repo.createQueryBuilder('a')
+            .where('LOWER(a.houseName) = LOWER(:houseName)', { houseName: decoded })
+            .orderBy('a.createdAt', 'DESC')
+            .getMany();
     }
 }

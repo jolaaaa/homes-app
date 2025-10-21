@@ -1,0 +1,65 @@
+
+.submissions-container {
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.controls .left, .controls .right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    cursor: default;
+}
+
+.data-table th {
+    cursor: pointer;
+    user-select: none;
+    background: #f9f9f9;
+}
+
+.data-table tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+.pagination {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.info {
+    color: #666;
+    padding: .5rem 0;
+}
+
+.error {
+    color: #a00;
+    padding: .5rem 0;
+}
