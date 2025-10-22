@@ -82,10 +82,11 @@ import {FormsModule} from "@angular/forms";
                 <button class="primary add-house-btn" (click)="goToAddHouse()">
                     Nuova Casa
                 </button>
-                <button class="all-submissions" (click)="goToAllSubmissions()">
+                <button class="primary add-house-btn" (click)="goToAllSubmissions()">
                     Tutte le submissions
                 </button>
             </footer>
+
         </div>
 
     `,
@@ -133,7 +134,8 @@ export class HomeComponent implements OnInit {
 
     }
 
+    // metodo che porta alla pagina di tutte le submissions
     goToAllSubmissions() {
-        this.router.navigate(['/submissions/all']);
+        this.router.navigate(['/submissions']);
     }
 }

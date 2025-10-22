@@ -48,9 +48,11 @@ const routeConfig: Routes = [
         title: 'Submissions Page'
     },
     {
-        path: 'submissions/all',
-        component: AllSubmissionsComponent,
-        title: 'All Submissions'
+        path: 'submissions',
+        loadComponent: () =>
+            import('./submissions/all-submissions.component')
+                .then(c => c.AllSubmissionsComponent),
+        title: 'All Submissions Page'
     },
 
 ];
