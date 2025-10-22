@@ -5,8 +5,7 @@ import {LoginComponent} from "./login";
 import {RegistrationComponent} from "./register";
 import {ProfileComponent} from "./profile";
 import {AuthGuard} from "./auth.guard";
-import {AddHouseComponent} from "./AddHouseComponent";
-import {AllSubmissionsComponent} from "./submissions/all-submissions.component";
+import {AddHouseComponent} from "./AddHouseComponent"
 
 // configurazione delle rotte dell'applicazione
 const routeConfig: Routes = [

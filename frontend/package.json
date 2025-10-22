@@ -4,8 +4,8 @@
   "description": "Example project from an angular.io guide.",
   "license": "MIT",
   "scripts": {
-    "ng": "../node_modules/.bin/ng",
     "start:front": "ng serve",
+    "ng": "../node_modules/.bin/ng",
     "build": "../node_modules/.bin/ng build",
     "watch": "../node_modules/.bin/ng build --watch --configuration development",
     "test": "../node_modules/.bin/ng test",

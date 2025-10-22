@@ -18,122 +18,66 @@ interface Application {
     standalone: true,
     imports: [CommonModule, FormsModule, HttpClientModule],
     template: `
-        <div class="container-fluid">
-            <h2>Submissions per: "{{ houseName }}"</h2>
+        <div *ngIf="!loading && filteredApplications.length > 0" class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col" (click)="toggleSort('firstName')" style="cursor: pointer;">
+                        First Name
+                        <span *ngIf="sortColumn==='firstName'">({{ sortDirection }})</span>
+                    </th>
+                    <th scope="col" (click)="toggleSort('lastName')" style="cursor: pointer;">
+                        Last Name
+                        <span *ngIf="sortColumn==='lastName'">({{ sortDirection }})</span>
+                    </th>
+                    <th scope="col" (click)="toggleSort('email')" style="cursor: pointer;">
+                        Email
+                        <span *ngIf="sortColumn==='email'">({{ sortDirection }})</span>
+                    </th>
+                    <th scope="col" (click)="toggleSort('createdAt')" style="cursor: pointer;">
+                        Created
+                        <span *ngIf="sortColumn==='createdAt'">({{ sortDirection }})</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let app of pagedData">
+                    <td>{{ app.firstName }}</td>
+                    <td>{{ app.lastName }}</td>
+                    <td>{{ app.email }}</td>
+                    <td>{{ app.createdAt | date:'medium' }}</td>
+                </tr>
+                </tbody>
+                <caption>Lista degli utenti</caption>
+            </table>
 
-            <div *ngIf="loading" class="info">Caricamento...</div>
-            <div *ngIf="error" class="error">{{ error }}</div>
-
-            <div class="controls" *ngIf="!loading && !error">
-                <div class="left">
-                    <label for="cerca" class="form-label">Cerca</label>
-                    <input type="search" class="form-control" [(ngModel)]="search" (ngModelChange)="applyFilters()"
-                           id="cerca" placeholder="Nome">
-                </div>
-
-                <div class="right">
-                    <label class="d-flex align-items-center gap-2">
-                        Mostra
-
-                        <div class="dropdown d-inline-block">
-                            <button
-                                    class="btn btn-outline-primary dropdown-toggle"
-                                    type="button"
-                                    id="pageSizeDropdown"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                            >
-                                {{ pageSize }}
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="pageSizeDropdown">
-                                <li *ngFor="let s of pageSizes">
-                                    <button
-                                            class="dropdown-item"
-                                            type="button"
-                                            (click)="pageSize = s; onPageSizeChange(); applyFilters()"
-                                    >
-                                        {{ s }}
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-
-                        elementi per pagina
-                    </label>
-                </div>
-
-
-            </div>
-
-            <div *ngIf="!loading && filteredApplications.length === 0" class="info">
-                Nessuna submission trovata per questa casa.
-            </div>
-
-            <div *ngIf="!loading && filteredApplications.length > 0" class="table-wrapper">
-                <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th (click)="toggleSort('firstName')">
-                            First Name
-                            <span *ngIf="sortColumn==='firstName'">({{ sortDirection }})</span>
-                        </th>
-                        <th (click)="toggleSort('lastName')">
-                            Last Name
-                            <span *ngIf="sortColumn==='lastName'">({{ sortDirection }})</span>
-                        </th>
-                        <th (click)="toggleSort('email')">
-                            Email
-                            <span *ngIf="sortColumn==='email'">({{ sortDirection }})</span>
-                        </th>
-                        <th (click)="toggleSort('createdAt')">
-                            Created
-                            <span *ngIf="sortColumn==='createdAt'">({{ sortDirection }})</span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let app of pagedData">
-                        <td>{{ app.firstName }}</td>
-                        <td>{{ app.lastName }}</td>
-                        <td>{{ app.email }}</td>
-                        <td>{{ app.createdAt | date:'medium' }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation" class="mt-2">
-                    <ul class="pagination mb-0">
-                        <li class="page-item" [class.disabled]="page === 1">
-                            <button class="page-link" type="button"
-                                    (click)="goToPage(1)" [disabled]="page === 1">
-                                « First
-                            </button>
-                        </li>
-                        <li class="page-item" [class.disabled]="page === 1">
-                            <button class="page-link" type="button"
-                                    (click)="goToPage(page - 1)" [disabled]="page === 1">
-                                ‹ Prev
-                            </button>
-                        </li>
-                        <li class="page-item disabled">
-      <span class="page-link">
-        Page {{ page }} / {{ totalPages }}
-      </span>
-                        </li>
-                        <li class="page-item" [class.disabled]="page === totalPages">
-                            <button class="page-link" type="button"
-                                    (click)="goToPage(page + 1)" [disabled]="page === totalPages">
-                                Next ›
-                            </button>
-                        </li>
-                        <li class="page-item" [class.disabled]="page === totalPages">
-                            <button class="page-link" type="button"
-                                    (click)="goToPage(totalPages)" [disabled]="page === totalPages">
-                                Last »
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <nav aria-label="Page navigation" class="mt-3">
+                <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item" [class.disabled]="page === 1">
+                        <button class="page-link" type="button"
+                                (click)="goToPage(1)" [disabled]="page === 1">« First
+                        </button>
+                    </li>
+                    <li class="page-item" [class.disabled]="page === 1">
+                        <button class="page-link" type="button"
+                                (click)="goToPage(page - 1)" [disabled]="page === 1">‹ Prev
+                        </button>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">Page {{ page }} / {{ totalPages }}</span>
+                    </li>
+                    <li class="page-item" [class.disabled]="page === totalPages">
+                        <button class="page-link" type="button"
+                                (click)="goToPage(page + 1)" [disabled]="page === totalPages">Next ›
+                        </button>
+                    </li>
+                    <li class="page-item" [class.disabled]="page === totalPages">
+                        <button class="page-link" type="button"
+                                (click)="goToPage(totalPages)" [disabled]="page === totalPages">Last »
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     `,
     styleUrls: ['./submissions.component.css'],

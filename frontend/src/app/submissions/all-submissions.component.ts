@@ -20,8 +20,8 @@ interface Application {
         <div class="container-fluid">
             <h2>Tutte le submissions</h2>
 
-            <div *ngIf="loading" class="info">Caricamento...</div>
-            <div *ngIf="error" class="error">{{ error }}</div>
+            <div *ngIf="loading" class="alert alert-info">Caricamento...</div>
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
             <div *ngIf="!loading && !error">
                 <div class="controls d-flex justify-content-between mb-3">
@@ -53,24 +53,29 @@ interface Application {
                     </div>
                 </div>
 
-                <div *ngIf="filteredApplications.length === 0" class="info">
+                <div *ngIf="filteredApplications.length === 0" class="alert alert-info">
                     Nessuna submission trovata.
                 </div>
 
-                <div *ngIf="filteredApplications.length > 0" class="table-wrapper">
-                    <table class="table table-striped">
-                        <thead>
+                <div *ngIf="filteredApplications.length > 0" class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="table-dark">
                         <tr>
-                            <th (click)="toggleSort('firstName')">First Name <span
-                                    *ngIf="sortColumn==='firstName'">({{ sortDirection }})</span></th>
-                            <th (click)="toggleSort('lastName')">Last Name <span
-                                    *ngIf="sortColumn==='lastName'">({{ sortDirection }})</span></th>
-                            <th (click)="toggleSort('email')">Email <span
-                                    *ngIf="sortColumn==='email'">({{ sortDirection }})</span></th>
-                            <th (click)="toggleSort('houseName')">House <span
-                                    *ngIf="sortColumn==='houseName'">({{ sortDirection }})</span></th>
-                            <th (click)="toggleSort('createdAt')">Created <span
-                                    *ngIf="sortColumn==='createdAt'">({{ sortDirection }})</span></th>
+                            <th scope="col" (click)="toggleSort('firstName')" style="cursor: pointer;">
+                                First Name <span *ngIf="sortColumn==='firstName'">({{ sortDirection }})</span>
+                            </th>
+                            <th scope="col" (click)="toggleSort('lastName')" style="cursor: pointer;">
+                                Last Name <span *ngIf="sortColumn==='lastName'">({{ sortDirection }})</span>
+                            </th>
+                            <th scope="col" (click)="toggleSort('email')" style="cursor: pointer;">
+                                Email <span *ngIf="sortColumn==='email'">({{ sortDirection }})</span>
+                            </th>
+                            <th scope="col" (click)="toggleSort('houseName')" style="cursor: pointer;">
+                                House <span *ngIf="sortColumn==='houseName'">({{ sortDirection }})</span>
+                            </th>
+                            <th scope="col" (click)="toggleSort('createdAt')" style="cursor: pointer;">
+                                Created <span *ngIf="sortColumn==='createdAt'">({{ sortDirection }})</span>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -82,10 +87,11 @@ interface Application {
                             <td>{{ app.createdAt | date:'medium' }}</td>
                         </tr>
                         </tbody>
+                        <caption>Lista degli utenti</caption>
                     </table>
 
-                    <nav aria-label="Page navigation" class="mt-2">
-                        <ul class="pagination mb-0">
+                    <nav aria-label="Page navigation" class="mt-3">
+                        <ul class="pagination justify-content-center mb-0">
                             <li class="page-item" [class.disabled]="page === 1">
                                 <button class="page-link" type="button" (click)="goToPage(1)" [disabled]="page === 1">«
                                     First
