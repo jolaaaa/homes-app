@@ -17,6 +17,11 @@ export class ApplicationsController {
         return { message: 'Application saved successfully' };
     }
 
+    @Get()
+    async getAllApplications() {
+        return this.repo.find({order: {createdAt: 'DESC'}});
+    }
+
     @Get('house/:houseName')
     async getByHouse(@Param('houseName') houseName: string) {
         const decoded = decodeURIComponent(houseName);

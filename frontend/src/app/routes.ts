@@ -6,6 +6,7 @@ import {RegistrationComponent} from "./register";
 import {ProfileComponent} from "./profile";
 import {AuthGuard} from "./auth.guard";
 import {AddHouseComponent} from "./AddHouseComponent";
+import {AllSubmissionsComponent} from "./submissions/all-submissions.component";
 
 // configurazione delle rotte dell'applicazione
 const routeConfig: Routes = [
@@ -44,8 +45,14 @@ const routeConfig: Routes = [
         loadComponent: () =>
             import('./submissions/submissions.component')
                 .then(c => c.SubmissionsComponent),
-        title: 'Submissions'
-    }
+        title: 'Submissions Page'
+    },
+    {
+        path: 'submissions/all',
+        component: AllSubmissionsComponent,
+        title: 'All Submissions'
+    },
+
 ];
 // esporta la configurazione come default per importarla altrove
 export default routeConfig;

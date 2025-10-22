@@ -18,7 +18,7 @@ interface Application {
     standalone: true,
     imports: [CommonModule, FormsModule, HttpClientModule],
     template: `
-        <div class="submissions-container">
+        <div class="container-fluid">
             <h2>Submissions per: "{{ houseName }}"</h2>
 
             <div *ngIf="loading" class="info">Caricamento...</div>
@@ -26,22 +26,43 @@ interface Application {
 
             <div class="controls" *ngIf="!loading && !error">
                 <div class="left">
-                    <label>
-                        Cerca:
-                        <input type="search" [(ngModel)]="search" (ngModelChange)="applyFilters()"
-                               placeholder="nome, cognome o email">
-                    </label>
+                    <label for="cerca" class="form-label">Cerca</label>
+                    <input type="search" class="form-control" [(ngModel)]="search" (ngModelChange)="applyFilters()"
+                           id="cerca" placeholder="Nome">
                 </div>
 
                 <div class="right">
-                    <label>
+                    <label class="d-flex align-items-center gap-2">
                         Mostra
-                        <select [(ngModel)]="pageSize" (change)="onPageSizeChange(); applyFilters()">
-                            <option *ngFor="let s of pageSizes" [ngValue]="s">{{ s }}</option>
-                        </select>
+
+                        <div class="dropdown d-inline-block">
+                            <button
+                                    class="btn btn-outline-primary dropdown-toggle"
+                                    type="button"
+                                    id="pageSizeDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                            >
+                                {{ pageSize }}
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                                <li *ngFor="let s of pageSizes">
+                                    <button
+                                            class="dropdown-item"
+                                            type="button"
+                                            (click)="pageSize = s; onPageSizeChange(); applyFilters()"
+                                    >
+                                        {{ s }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
                         elementi per pagina
                     </label>
                 </div>
+
+
             </div>
 
             <div *ngIf="!loading && filteredApplications.length === 0" class="info">
@@ -79,17 +100,39 @@ interface Application {
                     </tr>
                     </tbody>
                 </table>
-
-
-                <div class="pagination">
-                    <button (click)="goToPage(1)" [disabled]="page===1">&laquo; first</button>
-                    <button (click)="goToPage(page-1)" [disabled]="page===1">&lsaquo; prev</button>
-
-                    <span>Page {{ page }} / {{ totalPages }}</span>
-
-                    <button (click)="goToPage(page+1)" [disabled]="page===totalPages">next &rsaquo;</button>
-                    <button (click)="goToPage(totalPages)" [disabled]="page===totalPages">last &raquo;</button>
-                </div>
+                <nav aria-label="Page navigation" class="mt-2">
+                    <ul class="pagination mb-0">
+                        <li class="page-item" [class.disabled]="page === 1">
+                            <button class="page-link" type="button"
+                                    (click)="goToPage(1)" [disabled]="page === 1">
+                                « First
+                            </button>
+                        </li>
+                        <li class="page-item" [class.disabled]="page === 1">
+                            <button class="page-link" type="button"
+                                    (click)="goToPage(page - 1)" [disabled]="page === 1">
+                                ‹ Prev
+                            </button>
+                        </li>
+                        <li class="page-item disabled">
+      <span class="page-link">
+        Page {{ page }} / {{ totalPages }}
+      </span>
+                        </li>
+                        <li class="page-item" [class.disabled]="page === totalPages">
+                            <button class="page-link" type="button"
+                                    (click)="goToPage(page + 1)" [disabled]="page === totalPages">
+                                Next ›
+                            </button>
+                        </li>
+                        <li class="page-item" [class.disabled]="page === totalPages">
+                            <button class="page-link" type="button"
+                                    (click)="goToPage(totalPages)" [disabled]="page === totalPages">
+                                Last »
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     `,
@@ -141,9 +184,7 @@ export class SubmissionsComponent implements OnInit {
         const q = this.search.trim().toLowerCase();
         let list = this.allApplications.filter(a =>
             !q ||
-            a.firstName.toLowerCase().includes(q) ||
-            a.lastName.toLowerCase().includes(q) ||
-            a.email.toLowerCase().includes(q)
+            a.firstName.toLowerCase().includes(q)
         );
 
         if (this.sortColumn !== null) {
